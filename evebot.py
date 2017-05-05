@@ -2,6 +2,8 @@ import xml.etree.ElementTree as ET
 import requests
 import sys, getopt
 import csv
+import sys
+
 
 eve_central_base_url = 'http://api.eve-central.com/api/marketstat'
 
@@ -78,7 +80,7 @@ async def amarr(*args):
     return await my_bot.say(query(found_id, 30002187))
 
 
-my_bot.run("MzA3NTYyOTE0MTI5Mzc5MzI5.C-VoNg.e69UA3OUa6gWw64mIAim1xs0jzg")
+my_bot.run(sys.argv[1])
 
 
 
