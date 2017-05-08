@@ -30,15 +30,37 @@ def query(item_id, system_id, system_name):
     sell = type_.find('sell')
     sell_vol = sell.findtext('volume')
     sell_median = sell.findtext('median')
-    output = "The Median Price in " + system_name +" is:       " + sell_median + "\n"
-    output += "The Sell Volume is:                     " + sell_vol
+    output = "The Median Price in " + system_name + " is: " + sell_median + "\n"
+    output += "The Sell Volume is: " + sell_vol
+    return output
+
+def queryPlex():
+    payload = {
+        'typeid': 29668,
+        'usesystem': 30000142,
+    }
+
+    req = requests.post(eve_central_base_url, data=payload)
+    response = req.text
+
+    tree = ET.fromstring(response)
+    marketstat = tree.find('marketstat')
+    type_ = marketstat.find('type')
+    buy = type_.find('buy')
+    buy_max = buy.findtext('max')
+    sell = type_.find('sell')
+    sell_vol = sell.findtext('volume')
+    sell_median = sell.findtext('median')
+
+    output = "The median price of PLEX in Jita is: " + sell_median
     return output
 
 def find_id(item_name):
     with open('typeids.csv', 'r') as f:
         reader = csv.reader(f)
         for i, row in enumerate(reader):
-            if item_name == row[1]:
+            temp = row[1]
+            if item_name.upper() == temp.upper():
                 return row[2]
         return(item_name + "- NOT FOUND")
 
@@ -68,6 +90,10 @@ async def testargs(*args):
     return await my_bot.say(query(found_id, 30000142))
 
 @my_bot.command()
+async def plex(*args):
+    return await my_bot.say(queryPlex())
+
+@my_bot.command()
 async def jita(*args):
     inputString = combineArgs(args)
     found_id = find_id(inputString)
@@ -81,6 +107,3 @@ async def amarr(*args):
 
 
 my_bot.run(sys.argv[1])
-
-
-
