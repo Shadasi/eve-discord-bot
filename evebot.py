@@ -13,7 +13,7 @@ from discord.ext.commands import Bot
 my_bot = Bot(command_prefix="!")
 price = 0;
 
-def query(item_id, system_id):
+def query(item_id, system_id, system_name):
     payload = {
         'typeid': item_id,
         'usesystem': system_id,
@@ -30,7 +30,7 @@ def query(item_id, system_id):
     sell = type_.find('sell')
     sell_vol = sell.findtext('volume')
     sell_median = sell.findtext('median')
-    output = "The Median Price in Jita is:       " + sell_median + "\n"
+    output = "The Median Price in " + system_name +" is:       " + sell_median + "\n"
     output += "The Sell Volume is:                     " + sell_vol
     return output
 
@@ -71,13 +71,13 @@ async def testargs(*args):
 async def jita(*args):
     inputString = combineArgs(args)
     found_id = find_id(inputString)
-    return await my_bot.say(query(found_id, 30000142))
+    return await my_bot.say(query(found_id, 30000142, "Jita"))
 
 @my_bot.command()
 async def amarr(*args):
     inputString = combineArgs(args)
     found_id = find_id(inputString)
-    return await my_bot.say(query(found_id, 30002187))
+    return await my_bot.say(query(found_id, 30002187, "Amarr"))
 
 
 my_bot.run(sys.argv[1])
