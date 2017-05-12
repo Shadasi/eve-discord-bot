@@ -52,8 +52,12 @@ def queryPlex():
     sell_vol = sell.findtext('volume')
     sell_median = sell.findtext('median')
 
+    temp_med = sell_median
+    omega = float(temp_med) * 500
     output = "The median price of PLEX in Jita is: " + sell_median + "\n"
-    output += "There are " + sell_vol + " on the market."
+    output += "There are " + sell_vol + " on the market." + "\n"
+    output += "Based on the medium price it costs around " + str(omega) + " for an omega sub."
+
     return output
 
 def find_id(item_name):
