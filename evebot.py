@@ -36,7 +36,7 @@ def query(item_id, system_id, system_name):
 
 def queryPlex():
     payload = {
-        'typeid': 29668,
+        'typeid': 44992,
         'usesystem': 30000142,
     }
 
@@ -52,7 +52,8 @@ def queryPlex():
     sell_vol = sell.findtext('volume')
     sell_median = sell.findtext('median')
 
-    output = "The median price of PLEX in Jita is: " + sell_median
+    output = "The median price of PLEX in Jita is: " + sell_median + "\n"
+    output += "There are " + sell_vol + " on the market."
     return output
 
 def find_id(item_name):
